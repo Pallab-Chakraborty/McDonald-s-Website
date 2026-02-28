@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McDonald's — I'm Lovin' It</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #DA291C;
+    --yellow: #FFC72C;
+    --dark: #1A1A1A;
+    --mid: #3D3D3D;
+    --light: #F5F5F0;
+    --white: #FFFFFF;
+    --card-bg: #FFFDF5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVBAR ─────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: var(--red);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 68px;
+    box-shadow: 0 4px 20px rgba(218,41,28,0.4);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo .arch {
+    font-size: 36px; font-family: 'Bebas Neue', sans-serif;
+    color: var(--yellow); line-height: 1;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  }
+  .nav-logo span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 2px;
+    color: var(--white);
+  }
+  .nav-links { display: flex; gap: 8px; align-items: center; }
+  .nav-links a {
+    color: var(--white); text-decoration: none;
+    font-weight: 700; font-size: 14px; letter-spacing: 0.5px;
+    padding: 8px 16px; border-radius: 20px;
+    transition: background 0.2s;
+  }
+  .nav-links a:hover { background: rgba(255,255,255,0.15); }
+  .nav-order-btn {
+    background: var(--yellow) !important;
+    color: var(--dark) !important;
+    border-radius: 24px !important;
+    font-weight: 900 !important;
+    padding: 10px 24px !important;
+    transition: transform 0.15s, box-shadow 0.15s !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .nav-order-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
+    background: var(--yellow) !important;
+  }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: white; border-radius: 2px; }
+
+  /* ─── HERO ───────────────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    background: var(--dark);
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+    padding-top: 68px;
+  }
+  .hero-bg-pattern {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(218,41,28,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,199,44,0.08) 0%, transparent 50%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: linear-gradient(var(--yellow) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--yellow) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 1200px; margin: 0 auto;
+    padding: 80px 40px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-left { }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,199,44,0.15); border: 1px solid rgba(255,199,44,0.3);
+    border-radius: 30px; padding: 8px 18px; margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge span { font-size: 12px; font-weight: 800; letter-spacing: 2px; color: var(--yellow); text-transform: uppercase; }
+  .hero-badge .dot { width: 8px; height: 8px; background: var(--yellow); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 8vw, 110px);
+    line-height: 0.92;
+    color: var(--white);
+    letter-spacing: 2px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-title .yellow { color: var(--yellow); }
+  .hero-title .red-stroke {
+    -webkit-text-stroke: 2px var(--red);
+    color: transparent;
+  }
+  .hero-subtitle {
+    font-size: 18px; font-weight: 600;
+    color: rgba(255,255,255,0.65);
+    margin: 20px 0 36px;
+    line-height: 1.6;
+    animation: fadeUp 0.6s 0.2s ease both;
+    max-width: 420px;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--yellow); color: var(--dark);
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px;
+    padding: 16px 32px; border-radius: 50px; border: none; cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 24px rgba(255,199,44,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255,199,44,0.5); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: transparent; color: var(--white);
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 16px;
+    padding: 16px 32px; border-radius: 50px;
+    border: 2px solid rgba(255,255,255,0.25); cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: white; background: rgba(255,255,255,0.08); }
+
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 48px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .hero-stat { }
+  .hero-stat .num {
+    font-family: 'Bebas Neue', sans-serif; font-size: 36px;
+    color: var(--yellow); line-height: 1;
+  }
+  .hero-stat .label { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; }
+
+  .hero-right {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-burger-wrap {
+    position: relative; width: 420px; height: 420px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-glow {
+    position: absolute; width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(218,41,28,0.4) 0%, transparent 70%);
+    border-radius: 50%; animation: glowPulse 3s ease infinite;
+  }
+  @keyframes glowPulse { 0%,100%{transform:scale(1);opacity:0.7} 50%{transform:scale(1.15);opacity:1} }
+  .burger-emoji { font-size: 200px; line-height: 1; position: relative; z-index: 1; animation: float 4s ease-in-out infinite; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)); }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+  .hero-badge-float {
+    position: absolute; background: var(--white); border-radius: 16px;
+    padding: 12px 18px; display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3); animation: float 4s 1s ease-in-out infinite;
+    white-space: nowrap;
+  }
+  .hero-badge-float.one { top: 60px; right: -20px; }
+  .hero-badge-float.two { bottom: 80px; left: -20px; animation-delay: 2s; }
+  .badge-icon { font-size: 24px; }
+  .badge-text { font-size: 12px; font-weight: 800; color: var(--dark); }
+  .badge-sub { font-size: 11px; font-weight: 600; color: #888; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ─── SCROLL TICKER ──────────────────────────────────── */
+  .ticker {
+    background: var(--yellow); overflow: hidden;
+    padding: 14px 0; border-top: 3px solid rgba(0,0,0,0.08);
+  }
+  .ticker-inner {
+    display: flex; white-space: nowrap;
+    animation: tickerMove 25s linear infinite;
+    gap: 0;
+  }
+  .ticker-item {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 0 32px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 18px;
+    letter-spacing: 2px; color: var(--dark);
+  }
+  .ticker-dot { width: 8px; height: 8px; background: var(--red); border-radius: 50%; flex-shrink: 0; }
+  @keyframes tickerMove { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ─── SECTION COMMONS ────────────────────────────────── */
+  section { padding: 100px 40px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(218,41,28,0.08); border: 1px solid rgba(218,41,28,0.15);
+    border-radius: 20px; padding: 6px 16px; margin-bottom: 16px;
+  }
+  .section-tag span { font-size: 11px; font-weight: 800; letter-spacing: 2px; color: var(--red); text-transform: uppercase; }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 5vw, 64px); line-height: 1;
+    letter-spacing: 2px; color: var(--dark); margin-bottom: 16px;
+  }
+  .section-title .accent { color: var(--red); }
+  .section-sub { font-size: 17px; font-weight: 600; color: #666; line-height: 1.7; max-width: 520px; }
+
+  /* ─── MENU SECTION ───────────────────────────────────── */
+  .menu-section { background: var(--white); }
+  .menu-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 20px; }
+  .menu-cats { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-btn {
+    padding: 10px 22px; border-radius: 30px; border: 2px solid #E8E8E8;
+    background: transparent; font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 14px; cursor: pointer; color: var(--mid);
+    transition: all 0.2s;
+  }
+  .cat-btn.active, .cat-btn:hover { background: var(--red); border-color: var(--red); color: white; }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+  .menu-card {
+    background: var(--card-bg); border-radius: 24px;
+    overflow: hidden; border: 2px solid #F0EDE0;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer; position: relative;
+  }
+  .menu-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.12); }
+  .menu-card-img {
+    height: 200px; background: linear-gradient(135deg, #FFF3CC, #FFE599);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px; position: relative; overflow: hidden;
+  }
+  .menu-card-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(218,41,28,0.08) 0%, transparent 70%);
+  }
+  .card-badge {
+    position: absolute; top: 14px; left: 14px;
+    background: var(--red); color: white;
+    font-size: 11px; font-weight: 900; letter-spacing: 1px;
+    padding: 4px 12px; border-radius: 20px; text-transform: uppercase;
+  }
+  .menu-card-body { padding: 20px; }
+  .menu-card-name { font-weight: 900; font-size: 17px; margin-bottom: 4px; }
+  .menu-card-desc { font-size: 13px; color: #888; font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+  .menu-card-footer { display: flex; justify-content: space-between; align-items: center; }
+  .menu-card-price { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--red); }
+  .add-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--yellow); border: none; cursor: pointer;
+    font-size: 20px; font-weight: 900; display: flex; align-items: center; justify-content: center;
+    transition: transform 0.15s, background 0.15s;
+    box-shadow: 0 4px 12px rgba(255,199,44,0.4);
+  }
+  .add-btn:hover { transform: scale(1.15); background: var(--red); color: white; }
+
+  /* ─── DEALS SECTION ──────────────────────────────────── */
+  .deals-section { background: var(--dark); position: relative; overflow: hidden; }
+  .deals-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 100% 50%, rgba(218,41,28,0.2) 0%, transparent 60%);
+  }
+  .deals-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 20px; position: relative; z-index: 1; }
+  .deal-card {
+    border-radius: 24px; overflow: hidden; position: relative;
+    min-height: 300px; display: flex; align-items: flex-end;
+    cursor: pointer; transition: transform 0.25s;
+  }
+  .deal-card:hover { transform: scale(1.02); }
+  .deal-card.big { min-height: 400px; }
+  .deal-card-bg { position: absolute; inset: 0; }
+  .deal-bg-1 { background: linear-gradient(145deg, #DA291C, #8B0000); }
+  .deal-bg-2 { background: linear-gradient(145deg, #FFC72C, #E6A800); }
+  .deal-bg-3 { background: linear-gradient(145deg, #1A1A1A, #3D3D3D); border: 1px solid #333; }
+  .deal-emoji { position: absolute; right: 20px; top: 20px; font-size: 80px; opacity: 0.9; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3)); }
+  .deal-card.big .deal-emoji { font-size: 140px; top: auto; bottom: 40%; right: 30px; }
+  .deal-body { position: relative; z-index: 1; padding: 28px; }
+  .deal-tag { font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .deal-card.big .deal-tag { color: rgba(255,255,255,0.7); }
+  .deal-card:not(.big) .deal-tag { color: rgba(0,0,0,0.5); }
+  .deal-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; line-height: 1; margin-bottom: 8px; letter-spacing: 1px; }
+  .deal-card.big .deal-title { font-size: 48px; color: white; }
+  .deal-card:nth-child(2) .deal-title { color: var(--dark); }
+  .deal-card:nth-child(3) .deal-title { color: white; }
+  .deal-desc { font-size: 13px; font-weight: 700; opacity: 0.75; margin-bottom: 20px; }
+  .deal-card.big .deal-desc { color: rgba(255,255,255,0.75); }
+  .deal-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 14px;
+    padding: 12px 24px; border-radius: 30px; border: none; cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .deal-btn:hover { transform: translateX(4px); }
+  .deal-btn-light { background: white; color: var(--red); }
+  .deal-btn-dark { background: var(--dark); color: white; }
+  .deal-btn-yellow { background: var(--yellow); color: var(--dark); }
+
+  /* ─── HOW IT WORKS ───────────────────────────────────── */
+  .how-section { background: var(--light); }
+  .steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; margin-top: 60px; position: relative; }
+  .steps-grid::before {
+    content: ''; position: absolute; top: 44px; left: 12%; right: 12%; height: 2px;
+    background: linear-gradient(90deg, var(--yellow), var(--red));
+    z-index: 0;
+  }
+  .step-card { text-align: center; position: relative; z-index: 1; }
+  .step-num {
+    width: 88px; height: 88px; border-radius: 50%;
+    background: var(--white); border: 3px solid var(--yellow);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--red);
+    box-shadow: 0 8px 24px rgba(255,199,44,0.25);
+    transition: transform 0.25s, background 0.25s;
+  }
+  .step-card:hover .step-num { transform: scale(1.12); background: var(--yellow); }
+  .step-icon { font-size: 32px; }
+  .step-title { font-weight: 900; font-size: 17px; margin-bottom: 8px; }
+  .step-desc { font-size: 14px; color: #888; font-weight: 600; line-height: 1.6; }
+
+  /* ─── AI SECTION ─────────────────────────────────────── */
+  .ai-section { background: var(--dark); overflow: hidden; position: relative; }
+  .ai-section::before {
+    content: ''; position: absolute;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,199,44,0.08) 0%, transparent 70%);
+    top: -200px; left: -200px;
+  }
+  .ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; z-index: 1; }
+  .ai-features { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  .ai-feat {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 24px;
+    transition: border-color 0.25s, background 0.25s; cursor: pointer;
+  }
+  .ai-feat:hover { border-color: rgba(255,199,44,0.3); background: rgba(255,199,44,0.06); }
+  .ai-feat-icon { font-size: 28px; margin-bottom: 12px; }
+  .ai-feat-title { font-weight: 900; font-size: 15px; color: white; margin-bottom: 6px; }
+  .ai-feat-desc { font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 600; line-height: 1.5; }
+  .ai-visual {
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .ai-phone {
+    width: 280px; height: 520px; background: #0D0D0D;
+    border-radius: 44px; border: 3px solid #333;
+    overflow: hidden; position: relative;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05);
+  }
+  .phone-notch { width: 100px; height: 28px; background: #0D0D0D; border-radius: 0 0 20px 20px; margin: 0 auto; position: relative; z-index: 10; }
+  .phone-screen { padding: 0 16px 20px; }
+  .phone-header { background: var(--red); margin: -1px -16px 0; padding: 16px 20px; }
+  .phone-header-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: white; letter-spacing: 1px; }
+  .chat-bubble {
+    border-radius: 16px; padding: 12px 16px; margin: 10px 0;
+    font-size: 13px; font-weight: 700; line-height: 1.5;
+  }
+  .chat-user { background: rgba(255,199,44,0.15); color: var(--yellow); border-bottom-right-radius: 4px; margin-left: 30px; }
+  .chat-ai { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border-bottom-left-radius: 4px; margin-right: 30px; }
+  .chat-ai-label { font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 800; margin-bottom: 4px; letter-spacing: 1px; }
+  .phone-order-btn { background: var(--yellow); color: var(--dark); font-weight: 900; font-size: 14px; text-align: center; padding: 14px; border-radius: 14px; margin-top: 16px; }
+  .ai-ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(255,199,44,0.12);
+    animation: ringExpand 4s ease infinite;
+  }
+  .ai-ring:nth-child(1) { width: 340px; height: 340px; animation-delay: 0s; }
+  .ai-ring:nth-child(2) { width: 420px; height: 420px; animation-delay: 1s; }
+  .ai-ring:nth-child(3) { width: 500px; height: 500px; animation-delay: 2s; }
+  @keyframes ringExpand { 0%{opacity:0.4;transform:scale(0.9)} 50%{opacity:0.2} 100%{opacity:0;transform:scale(1.05)} }
+
+  /* ─── TESTIMONIALS ───────────────────────────────────── */
+  .reviews-section { background: var(--white); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 60px; }
+  .review-card {
+    background: var(--card-bg); border: 2px solid #F0EDE0;
+    border-radius: 24px; padding: 32px;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .review-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); }
+  .review-stars { color: var(--yellow); font-size: 18px; margin-bottom: 16px; }
+  .review-text { font-size: 15px; font-weight: 600; color: var(--mid); line-height: 1.7; margin-bottom: 24px; }
+  .review-author { display: flex; align-items: center; gap: 14px; }
+  .review-avatar { width: 44px; height: 44px; border-radius: 50%; font-size: 24px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #FFF3CC, #FFE599); }
+  .review-name { font-weight: 900; font-size: 15px; }
+  .review-handle { font-size: 12px; color: #AAA; font-weight: 700; }
+
+  /* ─── APP DOWNLOAD ───────────────────────────────────── */
+  .app-section {
+    background: linear-gradient(135deg, var(--red) 0%, #8B0000 100%);
+    position: relative; overflow: hidden;
+  }
+  .app-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; z-index: 1; }
+  .app-section .section-title { color: white; }
+  .app-section .section-sub { color: rgba(255,255,255,0.75); max-width: 440px; }
+  .app-section .section-tag { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+  .app-section .section-tag span { color: var(--yellow); }
+  .app-perks { display: flex; flex-direction: column; gap: 16px; margin: 32px 0; }
+  .app-perk { display: flex; align-items: center; gap: 16px; }
+  .perk-check { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .perk-text { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.85); }
+  .app-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+  .store-btn {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 16px; padding: 14px 24px; cursor: pointer;
+    transition: background 0.2s, border-color 0.2s; text-decoration: none;
+  }
+  .store-btn:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.4); }
+  .store-icon { font-size: 28px; }
+  .store-text small { display: block; font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.6); letter-spacing: 1px; }
+  .store-text strong { display: block; font-size: 17px; font-weight: 900; color: white; }
+  .app-phones {
+    display: flex; justify-content: center; align-items: flex-end;
+    gap: -20px; perspective: 1000px;
+  }
+  .app-phone-mock {
+    width: 200px; background: #1a1a1a; border-radius: 36px;
+    border: 3px solid #333; overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    transform: rotate(-8deg) translateY(20px);
+    transition: transform 0.3s;
+  }
+  .app-phone-mock:last-child { transform: rotate(5deg) translateX(-30px) translateY(10px); }
+  .app-phone-mock:hover { transform: rotate(0deg) translateY(0); }
+  .app-phone-screen { background: var(--dark); padding: 16px; }
+  .app-screen-hero { background: var(--red); border-radius: 20px; padding: 20px; margin-bottom: 12px; text-align: center; }
+  .app-screen-hero .tiny { font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.7); letter-spacing: 1px; }
+  .app-screen-hero .big { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: white; }
+  .app-screen-hero .emoji { font-size: 48px; }
+  .app-item { background: rgba(255,255,255,0.06); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .app-item-icon { font-size: 22px; }
+  .app-item-name { font-size: 12px; font-weight: 800; color: white; }
+  .app-item-price { font-size: 11px; font-weight: 700; color: var(--yellow); margin-left: auto; }
+
+  /* ─── FOOTER ─────────────────────────────────────────── */
+  footer {
+    background: #0D0D0D; padding: 80px 40px 40px;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; max-width: 1200px; margin: 0 auto; margin-bottom: 60px; }
+  .footer-brand .arch { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: var(--yellow); }
+  .footer-brand p { font-size: 14px; font-weight: 600; line-height: 1.7; margin-top: 16px; max-width: 280px; }
+  .footer-col h4 { font-weight: 900; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: white; margin-bottom: 20px; }
+  .footer-col a { display: block; font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.45); text-decoration: none; margin-bottom: 12px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--yellow); }
+  .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-bottom p { font-size: 13px; }
+  .footer-socials { display: flex; gap: 12px; }
+  .social-btn { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; transition: background 0.2s; }
+  .social-btn:hover { background: var(--red); }
+
+  /* ─── CART TOAST ──────────────────────────────────────── */
+  .cart-toast {
+    position: fixed; bottom: 32px; right: 32px; z-index: 2000;
+    background: var(--dark); color: white; border-radius: 20px;
+    padding: 16px 24px; display: flex; align-items: center; gap: 16px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4); min-width: 280px;
+    transform: translateX(140%); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .cart-toast.show { transform: translateX(0); }
+  .toast-icon { font-size: 28px; }
+  .toast-text strong { display: block; font-size: 15px; font-weight: 900; }
+  .toast-text span { font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 600; }
+  .toast-btn { margin-left: auto; background: var(--yellow); color: var(--dark); font-weight: 900; font-size: 13px; padding: 8px 18px; border-radius: 30px; border: none; cursor: pointer; white-space: nowrap; }
+
+  /* ─── STICKY ORDER BAR ───────────────────────────────── */
+  .order-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+    background: var(--yellow);
+    padding: 16px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    transform: translateY(100%); transition: transform 0.4s ease;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+  }
+  .order-bar.visible { transform: translateY(0); }
+  .order-bar-left { display: flex; align-items: center; gap: 16px; }
+  .order-bar-icon { font-size: 28px; }
+  .order-bar-text strong { display: block; font-size: 16px; font-weight: 900; color: var(--dark); }
+  .order-bar-text span { font-size: 13px; color: rgba(0,0,0,0.5); font-weight: 700; }
+  .order-bar-btn { background: var(--red); color: white; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 16px; padding: 14px 36px; border-radius: 50px; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(218,41,28,0.4); transition: transform 0.15s; }
+  .order-bar-btn:hover { transform: scale(1.05); }
+
+  /* ─── RESPONSIVE ─────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-content { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .deals-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .steps-grid::before { display: none; }
+    .ai-grid { grid-template-columns: 1fr; }
+    .ai-visual { display: none; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .app-grid { grid-template-columns: 1fr; }
+    .app-phones { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    section { padding: 70px 24px; }
+  }
+  @media (max-width: 600px) {
+    .steps-grid { grid-template-columns: 1fr; }
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 20px; }
+    nav { padding: 0 20px; }
+    .order-bar { padding: 12px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="nav-logo" href="#">
+    <span class="arch">M</span>
+    <span>McDonald's</span>
+  </a>
+  <div class="nav-links">
+    <a href="#menu">Menu</a>
+    <a href="#deals">Deals</a>
+    <a href="#how">How It Works</a>
+    <a href="#app">App</a>
+    <a href="#order" class="nav-order-btn">Order Now 🍔</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <div class="dot"></div>
+        <span>Now Ordering Near You</span>
+      </div>
+      <h1 class="hero-title">
+        I'M<br>
+        <span class="yellow">LOVIN'</span><br>
+        IT
+      </h1>
+      <p class="hero-subtitle">Freshly made, fast delivered. Order your favourite McDonald's meals and get them at your door in under 30 minutes.</p>
+      <div class="hero-ctas">
+        <a href="#menu" class="btn-primary">
+          🍟 Order Now
+        </a>
+        <a href="#deals" class="btn-secondary">
+          🎁 See Deals
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num">40K+</div>
+          <div class="label">Restaurants</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">4.9★</div>
+          <div class="label">App Rating</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">&lt;30m</div>
+          <div class="label">Delivery</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-burger-wrap">
+        <div class="hero-glow"></div>
+        <div class="burger-emoji">🍔</div>
+        <div class="hero-badge-float one">
+          <span class="badge-icon">⚡</span>
+          <div>
+            <div class="badge-text">Express Order</div>
+            <div class="badge-sub">Ready in 8 min</div>
+          </div>
+        </div>
+        <div class="hero-badge-float two">
+          <span class="badge-icon">🎁</span>
+          <div>
+            <div class="badge-text">2-for-1 Today</div>
+            <div class="badge-sub">App exclusive</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item"><span class="ticker-dot"></span> Big Mac Combo from ₹249</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> McDelivery in 30 min</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> Happy Meal — Kids Love It</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> McFlurry New Flavours</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> Download App — Exclusive Deals</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> McCafé — Every Morning ☕</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> Big Mac Combo from ₹249</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> McDelivery in 30 min</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> Happy Meal — Kids Love It</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> McFlurry New Flavours</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> Download App — Exclusive Deals</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> McCafé — Every Morning ☕</span>
+  </div>
+</div>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="container">
+    <div class="menu-header">
+      <div>
+        <div class="section-tag"><span>🍔 Our Menu</span></div>
+        <h2 class="section-title">PICK YOUR <span class="accent">FAVOURITE</span></h2>
+        <p class="section-sub">Freshly made with quality ingredients. Over 100 items to choose from.</p>
+      </div>
+      <a href="#" class="btn-primary" style="flex-shrink:0">View Full Menu →</a>
+    </div>
+    <div class="menu-cats">
+      <button class="cat-btn active" onclick="filterCat(this,'all')">All</button>
+      <button class="cat-btn" onclick="filterCat(this,'burgers')">🍔 Burgers</button>
+      <button class="cat-btn" onclick="filterCat(this,'sides')">🍟 Sides</button>
+      <button class="cat-btn" onclick="filterCat(this,'drinks')">🥤 Drinks</button>
+      <button class="cat-btn" onclick="filterCat(this,'desserts')">🍦 Desserts</button>
+      <button class="cat-btn" onclick="filterCat(this,'breakfast')">🥞 Breakfast</button>
+      <button class="cat-btn" onclick="filterCat(this,'mccafe')">☕ McCafé</button>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</section>
+
+<!-- DEALS -->
+<section class="deals-section" id="deals">
+  <div class="container">
+    <div class="section-tag" style="background:rgba(255,199,44,0.1);border-color:rgba(255,199,44,0.2)"><span style="color:var(--yellow)">🎁 Today's Deals</span></div>
+    <h2 class="section-title" style="color:white">UNBEATABLE <span style="color:var(--yellow)">OFFERS</span></h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.55);margin-bottom:48px">Limited time. Maximum value. Grab them before they're gone.</p>
+    <div class="deals-grid">
+      <div class="deal-card big" onclick="addToCart('McDouble Combo','₹299')">
+        <div class="deal-card-bg deal-bg-1"></div>
+        <div class="deal-emoji">🍔</div>
+        <div class="deal-body">
+          <div class="deal-tag">🔥 Best Seller</div>
+          <div class="deal-title">McDouble<br>Combo Deal</div>
+          <div class="deal-desc">2 burgers + large fries + large drink</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+            <span style="font-family:'Bebas Neue';font-size:42px;color:var(--yellow)">₹299</span>
+            <span style="font-size:16px;color:rgba(255,255,255,0.5);text-decoration:line-through;font-weight:700">₹450</span>
+          </div>
+          <button class="deal-btn deal-btn-light">Order Now →</button>
+        </div>
+      </div>
+      <div class="deal-card" onclick="addToCart('Fries + Drink','₹99')">
+        <div class="deal-card-bg deal-bg-2"></div>
+        <div class="deal-emoji">🍟</div>
+        <div class="deal-body">
+          <div class="deal-tag">⚡ Flash Deal</div>
+          <div class="deal-title">Fries +<br>Any Drink</div>
+          <div class="deal-desc">Large fries with any medium drink</div>
+          <div style="font-family:'Bebas Neue';font-size:36px;color:var(--dark);margin-bottom:16px">₹99</div>
+          <button class="deal-btn deal-btn-dark">Grab It →</button>
+        </div>
+      </div>
+      <div class="deal-card" onclick="addToCart('McFlurry','₹79')">
+        <div class="deal-card-bg deal-bg-3"></div>
+        <div class="deal-emoji">🍦</div>
+        <div class="deal-body">
+          <div class="deal-tag">🍦 New Flavour</div>
+          <div class="deal-title">McFlurry<br>Special</div>
+          <div class="deal-desc">New caramel crunch McFlurry</div>
+          <div style="font-family:'Bebas Neue';font-size:36px;color:var(--yellow);margin-bottom:16px">₹79</div>
+          <button class="deal-btn deal-btn-yellow">Try Now →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-tag" style="justify-content:center"><span>How It Works</span></div>
+      <h2 class="section-title">ORDER IN <span class="accent">4 EASY</span> STEPS</h2>
+      <p class="section-sub" style="margin:0 auto;text-align:center">From craving to doorstep — it's that simple.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num"><span class="step-icon">📍</span></div>
+        <h3 class="step-title">Set Your Location</h3>
+        <p class="step-desc">Enter your address and find your nearest McDonald's restaurant with live availability.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num"><span class="step-icon">🍔</span></div>
+        <h3 class="step-title">Choose Your Order</h3>
+        <p class="step-desc">Browse the full menu with AI-powered meal suggestions personalised for you.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num"><span class="step-icon">💳</span></div>
+        <h3 class="step-title">Quick Checkout</h3>
+        <p class="step-desc">Pay securely with Google Pay, Apple Pay, card or cash on delivery.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num"><span class="step-icon">🚀</span></div>
+        <h3 class="step-title">Track & Enjoy</h3>
+        <p class="step-desc">Real-time order tracking right to your door. Sit back and enjoy every bite.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI SECTION -->
+<section class="ai-section">
+  <div class="container">
+    <div class="ai-grid">
+      <div>
+        <div class="section-tag" style="background:rgba(255,199,44,0.08);border-color:rgba(255,199,44,0.15)"><span style="color:var(--yellow)">✨ Powered by Gemini AI</span></div>
+        <h2 class="section-title" style="color:white">SMARTER <span style="color:var(--yellow)">ORDERING</span><br>WITH AI</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.55)">Our Gemini AI engine learns your taste, suggests the perfect meal, and makes every order feel personal.</p>
+        <div class="ai-features">
+          <div class="ai-feat">
+            <div class="ai-feat-icon">🤖</div>
+            <div class="ai-feat-title">Conversational Ordering</div>
+            <div class="ai-feat-desc">Chat with AI to build your perfect meal in seconds</div>
+          </div>
+          <div class="ai-feat">
+            <div class="ai-feat-icon">🎯</div>
+            <div class="ai-feat-title">Personalised For You</div>
+            <div class="ai-feat-desc">Smart suggestions based on your order history & preferences</div>
+          </div>
+          <div class="ai-feat">
+            <div class="ai-feat-icon">🔍</div>
+            <div class="ai-feat-title">Smart Menu Search</div>
+            <div class="ai-feat-desc">Natural language search — just say what you're craving</div>
+          </div>
+          <div class="ai-feat">
+            <div class="ai-feat-icon">🥗</div>
+            <div class="ai-feat-title">Dietary Intelligence</div>
+            <div class="ai-feat-desc">Filters for vegan, gluten-free, calorie goals and more</div>
+          </div>
+        </div>
+      </div>
+      <div class="ai-visual">
+        <div class="ai-ring"></div>
+        <div class="ai-ring"></div>
+        <div class="ai-ring"></div>
+        <div class="ai-phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-header">
+              <div style="font-size:10px;color:rgba(255,255,255,0.6);font-weight:800;letter-spacing:1px;margin-bottom:2px">AI ASSISTANT</div>
+              <div class="phone-header-title">🤖 McBot</div>
+            </div>
+            <div style="padding:16px 0">
+              <div class="chat-bubble chat-user">
+                I want something spicy with a cold drink 🌶️
+              </div>
+              <div class="chat-bubble chat-ai">
+                <div class="chat-ai-label">MCBOT AI</div>
+                Perfect! Try the 🌶️ Spicy McChicken + Large Coke. I'll add a McFlurry as a cool-down treat. Total: ₹349 🎉
+              </div>
+              <div class="chat-bubble chat-user">
+                Yes! Add fries too
+              </div>
+              <div class="chat-bubble chat-ai">
+                <div class="chat-ai-label">MCBOT AI</div>
+                Done! ✅ Spicy McChicken + Large Fries + Large Coke + McFlurry. Total: ₹428
+              </div>
+              <div class="phone-order-btn">🛒 Confirm Order — ₹428</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="reviews">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:0">
+      <div class="section-tag" style="justify-content:center"><span>⭐ Customer Love</span></div>
+      <h2 class="section-title">WHAT PEOPLE <span class="accent">SAY</span></h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The AI assistant literally read my mind. Suggested a spicy burger combo and I was already thinking of it. Delivered in 22 minutes. McDonald's just gets better and better!"</p>
+        <div class="review-author">
+          <div class="review-avatar">👩</div>
+          <div>
+            <div class="review-name">Priya Sharma</div>
+            <div class="review-handle">@priya_eats • Delhi</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card" style="background:#FFFAF0;border-color:#FFE599">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ordered for my kids and the Happy Meal customisation is brilliant. The app is super fast, checkout is one tap with Google Pay, and tracking was real-time. 10/10."</p>
+        <div class="review-author">
+          <div class="review-avatar">👨</div>
+          <div>
+            <div class="review-name">Rahul Mehta</div>
+            <div class="review-handle">@rahulmehta • Mumbai</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Best fast food website I've used. The deals section alone saves me ₹200 every order. The McFlurry deal was an absolute steal. Love the new design and speed!"</p>
+        <div class="review-author">
+          <div class="review-avatar">👩‍💻</div>
+          <div>
+            <div class="review-name">Ananya Reddy</div>
+            <div class="review-handle">@ananya_r • Bangalore</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP DOWNLOAD -->
+<section class="app-section" id="app">
+  <div class="container">
+    <div class="app-grid">
+      <div>
+        <div class="section-tag"><span>📱 The App</span></div>
+        <h2 class="section-title">ORDER SMARTER<br>WITH THE APP</h2>
+        <p class="section-sub">Get exclusive app-only deals, track your order live, earn MyMcDonald's rewards, and reorder your favourites in one tap.</p>
+        <div class="app-perks">
+          <div class="app-perk"><div class="perk-check">✓</div><div class="perk-text">Exclusive app-only deals every day</div></div>
+          <div class="app-perk"><div class="perk-check">✓</div><div class="perk-text">Earn loyalty points on every order</div></div>
+          <div class="app-perk"><div class="perk-check">✓</div><div class="perk-text">Real-time order tracking</div></div>
+          <div class="app-perk"><div class="perk-check">✓</div><div class="perk-text">One-tap reorder your favourites</div></div>
+          <div class="app-perk"><div class="perk-check">✓</div><div class="perk-text">AI-powered meal personalisation</div></div>
+        </div>
+        <div class="app-buttons">
+          <a href="#" class="store-btn">
+            <span class="store-icon">🍎</span>
+            <div class="store-text">
+              <small>DOWNLOAD ON THE</small>
+              <strong>App Store</strong>
+            </div>
+          </a>
+          <a href="#" class="store-btn">
+            <span class="store-icon">▶</span>
+            <div class="store-text">
+              <small>GET IT ON</small>
+              <strong>Google Play</strong>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="app-phones">
+        <div class="app-phone-mock">
+          <div style="background:#0D0D0D;padding:10px;text-align:center">
+            <div style="width:60px;height:6px;background:#333;border-radius:3px;margin:0 auto"></div>
+          </div>
+          <div class="app-phone-screen">
+            <div class="app-screen-hero">
+              <div class="tiny">GOOD EVENING</div>
+              <div class="big">What's your order?</div>
+              <div class="emoji">🍔</div>
+            </div>
+            <div class="app-item"><span class="app-item-icon">🍔</span><span class="app-item-name">Big Mac</span><span class="app-item-price">₹199</span></div>
+            <div class="app-item"><span class="app-item-icon">🍟</span><span class="app-item-name">Large Fries</span><span class="app-item-price">₹99</span></div>
+            <div class="app-item"><span class="app-item-icon">🥤</span><span class="app-item-name">Coke Large</span><span class="app-item-price">₹89</span></div>
+          </div>
+        </div>
+        <div class="app-phone-mock">
+          <div style="background:#0D0D0D;padding:10px;text-align:center">
+            <div style="width:60px;height:6px;background:#333;border-radius:3px;margin:0 auto"></div>
+          </div>
+          <div class="app-phone-screen">
+            <div class="app-screen-hero" style="background:var(--yellow);padding:16px">
+              <div class="tiny" style="color:rgba(0,0,0,0.5)">TODAY'S DEAL</div>
+              <div class="big" style="color:var(--dark)">2-for-1 🔥</div>
+              <div class="emoji">🎁</div>
+            </div>
+            <div style="padding:16px 0">
+              <div style="font-size:11px;font-weight:800;color:rgba(255,255,255,0.4);letter-spacing:1px;margin-bottom:12px">YOUR REWARDS</div>
+              <div style="background:rgba(255,199,44,0.1);border-radius:14px;padding:14px;text-align:center">
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--yellow)">1,240</div>
+                <div style="font-size:12px;font-weight:800;color:rgba(255,255,255,0.5)">LOYALTY POINTS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="arch">M</div>
+      <p>Over 40,000 restaurants worldwide. Quality food, fast service, and a smile — every single time.</p>
+      <div class="footer-socials" style="margin-top:24px">
+        <div class="social-btn">📘</div>
+        <div class="social-btn">📸</div>
+        <div class="social-btn">🐦</div>
+        <div class="social-btn">▶</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Menu</h4>
+      <a href="#">Burgers</a>
+      <a href="#">Chicken & Fish</a>
+      <a href="#">Sides & Extras</a>
+      <a href="#">Desserts</a>
+      <a href="#">McCafé</a>
+      <a href="#">Happy Meals</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Sustainability</a>
+      <a href="#">Newsroom</a>
+      <a href="#">Careers</a>
+      <a href="#">Investors</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="#">Find a Restaurant</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Allergen Info</a>
+      <a href="#">Accessibility</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 McDonald's Corporation. All rights reserved.</p>
+    <p style="color:rgba(255,255,255,0.3);font-size:12px">Built with Google AI Studio · Powered by Gemini Pro</p>
+  </div>
+</footer>
+
+<!-- CART TOAST -->
+<div class="cart-toast" id="cartToast">
+  <span class="toast-icon">🛒</span>
+  <div class="toast-text">
+    <strong id="toastTitle">Added to cart!</strong>
+    <span id="toastPrice"></span>
+  </div>
+  <button class="toast-btn" onclick="hideToast()">View Cart</button>
+</div>
+
+<!-- STICKY ORDER BAR -->
+<div class="order-bar" id="orderBar">
+  <div class="order-bar-left">
+    <span class="order-bar-icon">🍟</span>
+    <div class="order-bar-text">
+      <strong>Ready to order?</strong>
+      <span>Delivery in under 30 minutes</span>
+    </div>
+  </div>
+  <button class="order-bar-btn" onclick="scrollToMenu()">Order Now →</button>
+</div>
+
+<script>
+  // ─── MENU DATA ────────────────────────────────────────
+  const menuItems = [
+    { name: "Big Mac", desc: "Two beef patties, special sauce, lettuce, cheese", price: "₹199", emoji: "🍔", cat: "burgers", badge: "Classic" },
+    { name: "McChicken Spicy", desc: "Crispy spicy chicken with mayo and lettuce", price: "₹179", emoji: "🍗", cat: "burgers", badge: "🔥 Hot" },
+    { name: "Quarter Pounder", desc: "Quarter lb beef, fresh onions, cheese", price: "₹229", emoji: "🥩", cat: "burgers", badge: null },
+    { name: "Filet-O-Fish", desc: "Crispy fish fillet with tartar sauce", price: "₹149", emoji: "🐟", cat: "burgers", badge: null },
+    { name: "Large Fries", desc: "Golden, crispy, perfectly salted fries", price: "₹99", emoji: "🍟", cat: "sides", badge: "Fan Fav" },
+    { name: "Chicken McNuggets", desc: "10-piece crispy chicken nuggets", price: "₹149", emoji: "🍗", cat: "sides", badge: null },
+    { name: "Coca-Cola Large", desc: "Ice cold refreshing Coca-Cola", price: "₹89", emoji: "🥤", cat: "drinks", badge: null },
+    { name: "McFlurry", desc: "Creamy soft serve with caramel crunch", price: "₹79", emoji: "🍦", cat: "desserts", badge: "New" },
+    { name: "Apple Pie", desc: "Warm flaky pastry with apple filling", price: "₹59", emoji: "🥧", cat: "desserts", badge: null },
+    { name: "Hotcakes", desc: "Fluffy pancakes with maple syrup butter", price: "₹119", emoji: "🥞", cat: "breakfast", badge: "Breakfast" },
+    { name: "Egg McMuffin", desc: "Fresh egg, cheese, Canadian bacon on muffin", price: "₹139", emoji: "🥚", cat: "breakfast", badge: null },
+    { name: "Flat White", desc: "Rich espresso with silky steamed milk", price: "₹129", emoji: "☕", cat: "mccafe", badge: "McCafé" },
+  ];
+
+  let currentCat = 'all';
+
+  function renderMenu(cat) {
+    const grid = document.getElementById('menuGrid');
+    const items = cat === 'all' ? menuItems : menuItems.filter(i => i.cat === cat);
+    grid.innerHTML = items.map(item => `
+      <div class="menu-card" onclick="addToCart('${item.name}','${item.price}')">
+        <div class="menu-card-img">
+          <span style="font-size:80px">${item.emoji}</span>
+          ${item.badge ? `<div class="card-badge">${item.badge}</div>` : ''}
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">${item.name}</div>
+          <div class="menu-card-desc">${item.desc}</div>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">${item.price}</span>
+            <button class="add-btn" onclick="event.stopPropagation();addToCart('${item.name}','${item.price}')">+</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function filterCat(btn, cat) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCat = cat;
+    renderMenu(cat);
+  }
+
+  renderMenu('all');
+
+  // ─── CART TOAST ───────────────────────────────────────
+  let toastTimer;
+  function addToCart(name, price) {
+    clearTimeout(toastTimer);
+    document.getElementById('toastTitle').textContent = name + ' added!';
+    document.getElementById('toastPrice').textContent = price + ' • Tap to view cart';
+    const toast = document.getElementById('cartToast');
+    toast.classList.add('show');
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  function hideToast() {
+    document.getElementById('cartToast').classList.remove('show');
+  }
+
+  // ─── STICKY ORDER BAR ─────────────────────────────────
+  const orderBar = document.getElementById('orderBar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      orderBar.classList.add('visible');
+    } else {
+      orderBar.classList.remove('visible');
+    }
+  });
+
+  function scrollToMenu() {
+    document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ─── MOBILE MENU ──────────────────────────────────────
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    if (links.style.display === 'flex') {
+      links.style.display = '';
+    } else {
+      links.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:var(--red);padding:20px;gap:8px;z-index:999';
+    }
+  }
+
+  // ─── SCROLL ANIMATIONS ────────────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.menu-card, .step-card, .review-card, .ai-feat, .deal-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
